@@ -35,3 +35,30 @@ pub fn calculateMinimumHP(allocator: std.mem.Allocator, dungeon: [][]i32) !i32 {
 
     return dp[0][0];
 }
+
+test "calculateMinimumHP returns 7" {
+    const allocator = std.testing.allocator;
+    const dungeon = &[_][]i32{
+        &[_]i32{ -2, -3, 3 },
+        &[_]i32{ -5, -10, 1 },
+        &[_]i32{ 10, 30, -5 },
+    };
+    try std.testing.expectEqual(@as(i32, 7), try calculateMinimumHP(allocator, dungeon));
+}
+
+test "calculateMinimumHP returns 1" {
+    const allocator = std.testing.allocator;
+    const dungeon = &[_][]i32{
+        &[_]i32{ 0 },
+    };
+    try std.testing.expectEqual(@as(i32, 1), try calculateMinimumHP(allocator, dungeon));
+}
+
+test "calculateMinimumHP returns 6" {
+    const allocator = std.testing.allocator;
+    const dungeon = &[_][]i32{
+        &[_]i32{ -2, -3, 3 },
+        &[_]i32{ -5, -10, 1 },
+    };
+    try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon));
+}
