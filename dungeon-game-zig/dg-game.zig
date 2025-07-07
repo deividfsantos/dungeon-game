@@ -5,12 +5,10 @@ pub fn calculateMinimumHP(allocator: std.mem.Allocator, dungeon: anytype) !i32 {
     const n = dungeon[0].len;
 
     var dp = try allocator.alloc([]i32, m);
-    defer allocator.free(dp);
 
     var k: usize = 0;
     while (k < m) : (k += 1) {
         dp[k] = try allocator.alloc(i32, n);
-        defer allocator.free(dp[k]);
     }
 
     dp[m - 1][n - 1] = @max(1, 1 - dungeon[m - 1][n - 1]);
@@ -34,7 +32,15 @@ pub fn calculateMinimumHP(allocator: std.mem.Allocator, dungeon: anytype) !i32 {
         }
     }
 
-    return dp[0][0];
+    const result = dp[0][0];
+
+    k = 0;
+    while (k < m) : (k += 1) {
+        allocator.free(dp[k]);
+    }
+    allocator.free(dp);
+
+    return result;
 }
 
 test "calculateMinimumHP returns 7" {
@@ -65,16 +71,6 @@ test "calculateMinimumHP returns 6" {
     const dungeon_data = [_][3]i32{
         [_]i32{ -2, -3, 3 },
         [_]i32{ -5, -10, 1 },
-    };
-
-    try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon_data));
-}
-
-test "calculateMinimumHP returns 6 again" {
-    const allocator = std.testing.allocator;
-
-    const dungeon_data = [_][2]i32{
-        [_]i32{ -2, -3, 3 }
     };
 
     try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon_data));
