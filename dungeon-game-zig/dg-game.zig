@@ -69,3 +69,13 @@ test "calculateMinimumHP returns 6" {
 
     try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon_data));
 }
+
+test "calculateMinimumHP returns 6 again" {
+    const allocator = std.testing.allocator;
+
+    const dungeon_data = [_][2]i32{
+        [_]i32{ -2, -3, 3 }
+    };
+
+    try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon_data));
+}
