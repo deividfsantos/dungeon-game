@@ -75,3 +75,30 @@ test "calculateMinimumHP returns 6" {
 
     try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(allocator, dungeon_data));
 }
+
+test "calculateMinimumHP returns 7 for 5x5 dungeon" {
+    const allocator = std.testing.allocator;
+
+    const dungeon_data = [_][5]i32{
+        [_]i32{ -2, -3, 3, -1, 2 },
+        [_]i32{ -5, -10, 1, -2, -3 },
+        [_]i32{ 10, 30, -5, -10, 1 },
+        [_]i32{ -3, -2, -1, -2, -3 },
+        [_]i32{ 1, 2, 3, -4, -5 },
+    };
+
+    try std.testing.expectEqual(@as(i32, 7), try calculateMinimumHP(allocator, dungeon_data));
+}
+
+test "calculateMinimumHP returns 4 for 4x6 dungeon" {
+    const allocator = std.testing.allocator;
+
+    const dungeon_data = [_][6]i32{
+        [_]i32{ -2, -3, 3, -1, 2, -2 },
+        [_]i32{ -5, -10, 1, -2, -3, 4 },
+        [_]i32{ 10, 30, -5, -10, 1, -1 },
+        [_]i32{ -3, -2, -1, -2, -3, -4 },
+    };
+
+    try std.testing.expectEqual(@as(i32, 4), try calculateMinimumHP(allocator, dungeon_data));
+}
