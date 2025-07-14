@@ -36,7 +36,7 @@ test "calculateMinimumHP returns 7" {
         [_]i32{ 10, 30, -5 },
     };
 
-    try std.testing.expectEqual(@as(i32, 7), try calculateMinimumHP(dungeon_data));
+    try std.testing.expectEqual(7, try calculateMinimumHP(dungeon_data));
 }
 
 test "calculateMinimumHP returns 1" {
@@ -44,7 +44,7 @@ test "calculateMinimumHP returns 1" {
         [_]i32{ 0 },
     };
 
-    try std.testing.expectEqual(@as(i32, 1), try calculateMinimumHP(dungeon_data));
+    try std.testing.expectEqual(1, try calculateMinimumHP(dungeon_data));
 }
 
 test "calculateMinimumHP returns 6" {
@@ -53,7 +53,7 @@ test "calculateMinimumHP returns 6" {
         [_]i32{ -5, -10, 1 },
     };
 
-    try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(dungeon_data));
+    try std.testing.expectEqual(6, try calculateMinimumHP(dungeon_data));
 }
 
 test "calculateMinimumHP returns 7 for 5x5 dungeon" {
@@ -65,7 +65,7 @@ test "calculateMinimumHP returns 7 for 5x5 dungeon" {
         [_]i32{ 1, 2, 3, -4, -5 },
     };
 
-    try std.testing.expectEqual(@as(i32, 8), try calculateMinimumHP(dungeon_data));
+    try std.testing.expectEqual(8, try calculateMinimumHP(dungeon_data));
 }
 
 test "calculateMinimumHP returns 4 for 4x6 dungeon" {
@@ -77,5 +77,5 @@ test "calculateMinimumHP returns 4 for 4x6 dungeon" {
         [_]i32{ -3, -2, -1, -2, -3, -4 },
     };
 
-    try std.testing.expectEqual(@as(i32, 6), try calculateMinimumHP(dungeon_data));
+    try std.testing.expectEqual(6, try calculateMinimumHP(dungeon_data));
 }
