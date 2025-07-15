@@ -1,5 +1,7 @@
 const std = @import("std");
 
+
+// Code starts filling last line and last column for simplification
 pub fn calculateMinimumHP(dungeon: anytype) !i32 {
     const m = dungeon.len;
     const n = dungeon[0].len;
