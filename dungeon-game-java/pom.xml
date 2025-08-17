@@ -78,14 +78,14 @@
             <version>${gatling.version}</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>io.gatling</groupId>
             <artifactId>gatling-app</artifactId>
             <version>${gatling.version}</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>io.gatling</groupId>
             <artifactId>gatling-recorder</artifactId>
@@ -121,27 +121,27 @@
                     <argLine>--enable-preview</argLine>
                 </configuration>
             </plugin>
-            
+
             <!-- Gatling Maven Plugin -->
-<!--            <plugin>-->
-<!--                <groupId>io.gatling</groupId>-->
-<!--                <artifactId>gatling-maven-plugin</artifactId>-->
-<!--                <version>${gatling-maven-plugin.version}</version>-->
-<!--                <configuration>-->
-<!--                    <jvmArgs>-->
-<!--                        <jvmArg>-Xmx1024m</jvmArg>-->
-<!--                        <jvmArg>-Xms512m</jvmArg>-->
-<!--                    </jvmArgs>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>test</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>io.gatling</groupId>-->
+            <!--                <artifactId>gatling-maven-plugin</artifactId>-->
+            <!--                <version>${gatling-maven-plugin.version}</version>-->
+            <!--                <configuration>-->
+            <!--                    <jvmArgs>-->
+            <!--                        <jvmArg>-Xmx1024m</jvmArg>-->
+            <!--                        <jvmArg>-Xms512m</jvmArg>-->
+            <!--                    </jvmArgs>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <phase>test</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>test</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -89,12 +89,6 @@ class DungeonGameStressTest extends Simulation {
   // Cenário de monitoramento
   val monitoringUser = scenario("Monitoring User")
     .repeat(20) {
-      exec(
-        http("Check Health")
-          .get("/api/dungeon/health")
-          .check(status.is(200))
-      )
-      .pause(5.seconds)
       .exec(
         http("Get Stats")
           .get("/api/dungeon/stats?hours=1")

@@ -1,10 +1,9 @@
 package com.dsantos.controller;
 
+import com.dsantos.controller.request.DungeonRequest;
 import com.dsantos.model.GameResult;
 import com.dsantos.service.DungeonGameService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,27 +45,5 @@ public class DungeonGameController {
         stats.put("totalExecutions", dungeonGameService.getExecutionCount(hours));
         stats.put("hoursRange", hours);
         return ResponseEntity.ok(stats);
-    }
-
-    @GetMapping("/health")
-    public ResponseEntity<Map<String, String>> health() {
-        Map<String, String> status = new HashMap<>();
-        status.put("status", "UP");
-        status.put("service", "Dungeon Game API");
-        return ResponseEntity.ok(status);
-    }
-
-    public static class DungeonRequest {
-        @NotNull(message = "Dungeon cannot be null")
-        @Size(min = 1, message = "Dungeon must have at least one row")
-        private int[][] dungeon;
-
-        public int[][] getDungeon() {
-            return dungeon;
-        }
-
-        public void setDungeon(int[][] dungeon) {
-            this.dungeon = dungeon;
-        }
     }
 }

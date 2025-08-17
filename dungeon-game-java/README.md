@@ -1,10 +1,12 @@
 # Dungeon Game API
 
-A Java 23 Spring Boot application that solves the LeetCode Dungeon Game problem with REST API and PostgreSQL integration.
+A Java 23 Spring Boot application that solves the LeetCode Dungeon Game problem with REST API and PostgreSQL
+integration.
 
 ## Problem Description
 
-The Dungeon Game is a classic dynamic programming problem where you need to calculate the minimum initial health required for a knight to rescue a princess in a dungeon.
+The Dungeon Game is a classic dynamic programming problem where you need to calculate the minimum initial health
+required for a knight to rescue a princess in a dungeon.
 
 ## Features
 
@@ -18,6 +20,7 @@ The Dungeon Game is a classic dynamic programming problem where you need to calc
 ## API Endpoints
 
 ### Calculate Minimum HP
+
 ```
 POST /api/dungeon/calculate
 Content-Type: application/json
@@ -32,6 +35,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "id": 1,
@@ -43,16 +47,19 @@ Response:
 ```
 
 ### Get Recent Results
+
 ```
 GET /api/dungeon/results?hours=24
 ```
 
 ### Get Performance Stats
+
 ```
 GET /api/dungeon/stats?hours=24
 ```
 
 ### Health Check
+
 ```
 GET /api/dungeon/health
 ```
@@ -62,11 +69,13 @@ GET /api/dungeon/health
 ### Using Docker Compose (Recommended)
 
 1. Build the application:
+
 ```bash
 mvn clean package -DskipTests
 ```
 
 2. Start the services:
+
 ```bash
 docker-compose up -d
 ```
@@ -78,6 +87,7 @@ docker-compose up -d
 1. Start PostgreSQL locally
 2. Update `application.yml` with your database credentials
 3. Run the application:
+
 ```bash
 mvn spring-boot:run
 ```
@@ -85,11 +95,13 @@ mvn spring-boot:run
 ## Testing
 
 ### Unit Tests
+
 ```bash
 mvn test
 ```
 
 ### API Testing with curl
+
 ```bash
 # Test the health endpoint
 curl http://localhost:8080/api/dungeon/health
@@ -117,12 +129,14 @@ The application is designed to handle high load and provides performance metrics
 ### Gatling Test Scenarios
 
 #### 1. **Basic Load Test** (`DungeonGameBasicLoadTest`)
+
 - **Purpose**: Validate normal operation under moderate load
 - **Load**: 10-20 concurrent users
 - **Duration**: 2 minutes
 - **Assertions**: 95% success rate, <1s average response time
 
 #### 2. **Stress Test** (`DungeonGameStressTest`)
+
 - **Purpose**: Test application limits and scalability
 - **Load**: Up to 200 concurrent users across multiple phases
 - **Duration**: 10 minutes
@@ -130,6 +144,7 @@ The application is designed to handle high load and provides performance metrics
 - **Assertions**: 90% success rate, <3s average response time
 
 #### 3. **Red Team Test** (`DungeonGameRedTeamTest`)
+
 - **Purpose**: Simulate DoS attacks and malicious payloads
 - **Load**: Multiple attack vectors simultaneously
 - **Duration**: 5 minutes
@@ -139,11 +154,13 @@ The application is designed to handle high load and provides performance metrics
 ### Running Gatling Tests
 
 #### Interactive Script (Recommended)
+
 ```bash
 ./run-gatling-tests.sh
 ```
 
 #### Manual Execution
+
 ```bash
 # Run specific test
 mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
@@ -153,7 +170,9 @@ mvn gatling:test
 ```
 
 #### Prerequisites
+
 1. Start the application:
+
 ```bash
 ./start.sh
 # OR
@@ -163,6 +182,7 @@ java -jar target/dungeon-game-1.0-SNAPSHOT.jar
 ```
 
 2. Verify health:
+
 ```bash
 curl http://localhost:8080/api/dungeon/health
 ```
@@ -170,6 +190,7 @@ curl http://localhost:8080/api/dungeon/health
 ### Test Reports
 
 Gatling generates detailed HTML reports in `target/gatling/` after each test execution, including:
+
 - Response time percentiles
 - Requests per second
 - Error rates

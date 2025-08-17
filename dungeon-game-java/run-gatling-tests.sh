@@ -3,26 +3,6 @@
 echo "🎯 Dungeon Game Gatling Stress Tests"
 echo "===================================="
 
-# Function to check if application is running
-check_app_health() {
-    echo "📋 Checking if application is running..."
-    local max_attempts=30
-    local attempt=1
-    
-    while [ $attempt -le $max_attempts ]; do
-        if curl -s http://localhost:8080/api/dungeon/health > /dev/null 2>&1; then
-            echo "✅ Application is running and healthy!"
-            return 0
-        fi
-        echo "⏳ Attempt $attempt/$max_attempts - Waiting for application to start..."
-        sleep 2
-        ((attempt++))
-    done
-    
-    echo "❌ Application is not responding after $max_attempts attempts"
-    return 1
-}
-
 # Function to run specific test
 run_test() {
     local test_name=$1
