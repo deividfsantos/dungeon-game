@@ -71,19 +71,6 @@ APP_PID=$!
 
 print_color $YELLOW "⏳ Waiting for application to initialize (PID: $APP_PID)..."
 
-# Wait for application to start
-max_attempts=30
-attempt=1
-while [ $attempt -le $max_attempts ]; do
-    if curl -s http://localhost:8080/api/dungeon/health > /dev/null 2>&1; then
-        print_color $GREEN "✅ Application is responding!"
-        break
-    fi
-    print_color $YELLOW "   Attempt $attempt/$max_attempts..."
-    sleep 2
-    ((attempt++))
-done
-
 if [ $attempt -gt $max_attempts ]; then
     print_color $RED "❌ Application did not start within expected time"
     kill $APP_PID 2>/dev/null
@@ -92,13 +79,6 @@ fi
 
 print_color $BLUE "\n🧪 Testing API endpoints..."
 
-# Basic endpoint testing
-print_color $YELLOW "1. Testing health check..."
-if curl -s http://localhost:8080/api/dungeon/health | grep -q "UP"; then
-    print_color $GREEN "   ✅ Health check OK"
-else
-    print_color $RED "   ❌ Health check failed"
-fi
 
 print_color $YELLOW "2. Testing dungeon calculation..."
 response=$(curl -s -X POST http://localhost:8080/api/dungeon/calculate \

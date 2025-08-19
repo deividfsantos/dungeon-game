@@ -20,10 +20,6 @@ sleep 10
 
 echo "Testing API endpoints..."
 
-# Test health endpoint
-echo "1. Testing health endpoint..."
-curl -s http://localhost:8080/api/dungeon/health | jq . || echo "Health endpoint test"
-
 # Test calculation endpoint with small dungeon
 echo -e "\n2. Testing small dungeon calculation..."
 curl -s -X POST http://localhost:8080/api/dungeon/calculate \

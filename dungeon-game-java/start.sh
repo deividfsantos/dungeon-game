@@ -28,10 +28,6 @@ if [ $? -eq 0 ]; then
     echo "Waiting for services to start..."
     sleep 15
     
-    echo "Testing the API..."
-    curl -s http://localhost:8080/api/dungeon/health || echo "API not ready yet"
-    echo ""
-    
     echo "API is ready at http://localhost:8080"
     echo "PostgreSQL is ready at localhost:5432"
 else

@@ -58,12 +58,6 @@ GET /api/dungeon/results?hours=24
 GET /api/dungeon/stats?hours=24
 ```
 
-### Health Check
-
-```
-GET /api/dungeon/health
-```
-
 ## Quick Start
 
 ### Using Docker Compose (Recommended)
@@ -103,8 +97,6 @@ mvn test
 ### API Testing with curl
 
 ```bash
-# Test the health endpoint
-curl http://localhost:8080/api/dungeon/health
 
 # Test calculation endpoint
 curl -X POST http://localhost:8080/api/dungeon/calculate \
@@ -123,7 +115,6 @@ curl http://localhost:8080/api/dungeon/stats?hours=1
 The application is designed to handle high load and provides performance metrics. Key endpoints for stress testing:
 
 - `/api/dungeon/calculate` - Main calculation endpoint
-- `/api/dungeon/health` - Health check for load balancer
 - `/api/dungeon/stats` - Performance monitoring
 
 ### Gatling Test Scenarios
@@ -179,12 +170,6 @@ mvn gatling:test
 docker compose up -d
 # OR
 java -jar target/dungeon-game-1.0-SNAPSHOT.jar
-```
-
-2. Verify health:
-
-```bash
-curl http://localhost:8080/api/dungeon/health
 ```
 
 ### Test Reports

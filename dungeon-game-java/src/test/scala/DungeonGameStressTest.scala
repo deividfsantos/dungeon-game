@@ -132,8 +132,6 @@ class DungeonGameStressTest extends Simulation {
     // Continuous monitoring
     scenario("Monitoring User").inject(
       constantUsersPerSec(1) during (10.minutes)
-    ).exec(
-      http("Check Health").get("/api/dungeon/health").check(status.is(200))
     ).pause(10.seconds)
     .exec(
       http("Get Stats").get("/api/dungeon/stats?hours=1").check(status.is(200))

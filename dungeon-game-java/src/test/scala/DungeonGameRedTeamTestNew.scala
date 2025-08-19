@@ -102,11 +102,6 @@ class DungeonGameRedTeamTest extends Simulation {
           .get("/api/dungeon/stats?hours=24")
           .check(status.in(200, 429, 500))
       )
-      .exec(
-        http("Health Check")
-          .get("/api/dungeon/health")
-          .check(status.in(200, 429, 500))
-      )
       .pause(50.milliseconds, 200.milliseconds)
     }
 

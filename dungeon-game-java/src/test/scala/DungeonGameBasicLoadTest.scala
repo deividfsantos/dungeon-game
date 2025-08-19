@@ -36,11 +36,6 @@ class DungeonGameBasicLoadTest extends Simulation {
   }
 
   val scn = scenario("Basic Load Test with Variable Dungeon Sizes")
-    .exec(
-      http("Health Check")
-        .get("/api/dungeon/health")
-        .check(status.is(200))
-    )
     .pause(1)
     .repeat(15) {
       exec(
