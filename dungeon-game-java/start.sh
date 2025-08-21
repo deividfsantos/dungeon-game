@@ -3,7 +3,7 @@
 echo "Building Dungeon Game API..."
 
 # Clean and build the project
-mvn clean package -DskipTests
+mvn clean package
 
 # Check if build was successful
 if [ $? -eq 0 ]; then

@@ -36,12 +36,6 @@ show_menu() {
     read -p "Enter your option [0-6]: " choice
 }
 
-# Check if Maven is available
-if ! command -v mvn &> /dev/null; then
-    echo "❌ Maven not found. Please install Maven first."
-    exit 1
-fi
-
 # Main menu loop
 while true; do
     show_menu

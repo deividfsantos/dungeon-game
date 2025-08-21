@@ -16,7 +16,6 @@ public class DungeonGameService {
     private final DungeonGame dungeonGame;
     private final GameResultRepository gameResultRepository;
 
-    @Autowired
     public DungeonGameService(GameResultRepository gameResultRepository) {
         this.dungeonGame = new DungeonGame();
         this.gameResultRepository = gameResultRepository;
