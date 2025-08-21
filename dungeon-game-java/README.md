@@ -114,6 +114,67 @@ The application is designed to handle high load and provides performance metrics
 - `/api/dungeon/health` - Health check for load balancer
 - `/api/dungeon/stats` - Performance monitoring
 
+### Gatling Test Scenarios
+
+#### 1. **Basic Load Test** (`DungeonGameBasicLoadTest`)
+- **Purpose**: Validate normal operation under moderate load
+- **Load**: 10-20 concurrent users
+- **Duration**: 2 minutes
+- **Assertions**: 95% success rate, <1s average response time
+
+#### 2. **Stress Test** (`DungeonGameStressTest`)
+- **Purpose**: Test application limits and scalability
+- **Load**: Up to 200 concurrent users across multiple phases
+- **Duration**: 10 minutes
+- **Features**: Different dungeon sizes, burst patterns, continuous monitoring
+- **Assertions**: 90% success rate, <3s average response time
+
+#### 3. **Red Team Test** (`DungeonGameRedTeamTest`)
+- **Purpose**: Simulate DoS attacks and malicious payloads
+- **Load**: Multiple attack vectors simultaneously
+- **Duration**: 5 minutes
+- **Attacks**: Rapid fire, malicious payloads, resource exhaustion, slow loris
+- **Assertions**: 70% success rate (resilience testing)
+
+### Running Gatling Tests
+
+#### Interactive Script (Recommended)
+```bash
+./run-gatling-tests.sh
+```
+
+#### Manual Execution
+```bash
+# Run specific test
+mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
+
+# Run all tests
+mvn gatling:test
+```
+
+#### Prerequisites
+1. Start the application:
+```bash
+./start.sh
+# OR
+docker compose up -d
+# OR
+java -jar target/dungeon-game-1.0-SNAPSHOT.jar
+```
+
+2. Verify health:
+```bash
+curl http://localhost:8080/api/dungeon/health
+```
+
+### Test Reports
+
+Gatling generates detailed HTML reports in `target/gatling/` after each test execution, including:
+- Response time percentiles
+- Requests per second
+- Error rates
+- Performance graphs
+
 ## Database Schema
 
 The application automatically creates the following table:
