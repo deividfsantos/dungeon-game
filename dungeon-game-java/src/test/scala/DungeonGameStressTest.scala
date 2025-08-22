@@ -45,7 +45,33 @@ class DungeonGameStressTest extends Simulation {
   ))
 
   // Normal user scenario - mixed dungeon sizes
-  val normalUser: ScenarioBuilder = scenario("Normal User")
+  val normalUserWarmup: ScenarioBuilder = scenario("Normal User - Warmup")
+    .feed(feeder)
+    .exec(
+      http("Calculate Dungeon - ${dungeonSize}")
+        .post("/api/dungeon/calculate")
+        .body(StringBody("${payload}"))
+        .check(status.is(200))
+        .check(responseTimeInMillis.lt(15000)) // Increased timeout for larger dungeons
+        .check(jsonPath("$.minimumHp").exists)
+    )
+    .pause(2, 5)
+
+  // Normal user scenario - sustained load
+  val normalUserSustained: ScenarioBuilder = scenario("Normal User - Sustained")
+    .feed(feeder)
+    .exec(
+      http("Calculate Dungeon - ${dungeonSize}")
+        .post("/api/dungeon/calculate")
+        .body(StringBody("${payload}"))
+        .check(status.is(200))
+        .check(responseTimeInMillis.lt(15000)) // Increased timeout for larger dungeons
+        .check(jsonPath("$.minimumHp").exists)
+    )
+    .pause(2, 5)
+
+  // Normal user scenario - peak load
+  val normalUserPeak: ScenarioBuilder = scenario("Normal User - Peak")
     .feed(feeder)
     .exec(
       http("Calculate Dungeon - ${dungeonSize}")
@@ -102,10 +128,10 @@ class DungeonGameStressTest extends Simulation {
 
   setUp(
     // Phase 1: Warm-up with small dungeons
-    normalUser.inject(rampUsers(30) during (1.minute)),
+    normalUserWarmup.inject(rampUsers(30) during (1.minute)),
     
     // Phase 2: Normal load with mixed sizes
-    normalUser.inject(
+    normalUserSustained.inject(
       nothingFor(1.minute),
       constantUsersPerSec(15) during (3.minutes)
     ),
@@ -125,7 +151,7 @@ class DungeonGameStressTest extends Simulation {
     ),
     
     // Phase 5: Maximum stress with giant dungeons
-    normalUser.inject(
+    normalUserPeak.inject(
       nothingFor(5.minutes),
       rampUsers(100) during (2.minutes),
       constantUsersPerSec(50) during (3.minutes)
