@@ -26,8 +26,8 @@ show_menu() {
     echo "Choose test type:"
     echo "1) Basic Load Test"
     echo "2) Stress Test"
-    echo "3) Red Team Attack Test"
-    echo "4) Red Team Extreme Test"
+    echo "3) Attack Test"
+    echo "4) Extreme Test"
     echo "5) Run ALL tests"
     echo "0) Exit"
     echo ""
@@ -45,10 +45,10 @@ while true; do
             run_test "DungeonGameStressTest" "Stress Test"
             ;;
         3)
-            run_test "DungeonGameRedTeamTest" "Red Team Attack Test"
+            run_test "DungeonGameSecurityTest" "Attack Test"
             ;;
         4)
-            run_test "DungeonGameRedTeamTestNew" "Red Team Extreme Test"
+            run_test "DungeonGameRedExtremeTest" "Extreme Test"
             ;;
         5)
             echo "🎯 Running ALL tests..."
@@ -56,9 +56,9 @@ while true; do
             sleep 30
             run_test "DungeonGameStressTest" "2/4 - Stress"
             sleep 60
-            run_test "DungeonGameRedTeamTest" "3/4 - Red Team"
+            run_test "DungeonGameSecurityTest" "3/4 - Red Team"
             sleep 10
-            run_test "DungeonGameRedTeamTestNew" "4/4 - Extreme"
+            run_test "DungeonGameExtremeTest" "4/4 - Extreme"
             echo "🏁 All tests completed!"
             ;;
         0)

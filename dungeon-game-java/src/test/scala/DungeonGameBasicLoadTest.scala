@@ -28,7 +28,6 @@ class DungeonGameBasicLoadTest extends Simulation {
     """{"dungeon": [[-10, -20, 30, 15, -25, 40, -5, 12], [8, -18, 22, -30, 35, -8, 20, -15], [-12, 25, -40, 50, -10, 18, -22, 30], [35, -45, 20, -25, 40, -12, 15, -35], [-20, 30, -50, 25, -15, 35, -40, 20], [10, -25, 40, -30, 15, -20, 35, -10], [-30, 45, -20, 25, -40, 15, -25, 50], [20, -35, 40, -15, 25, -30, 10, -45]]}"""
   )
 
-  // Function to select random payload based on weight
   def getRandomPayload: String = {
     val rand = scala.util.Random.nextInt(10)
     rand match {
@@ -44,7 +43,7 @@ class DungeonGameBasicLoadTest extends Simulation {
       exec(
         http("Calculate Dungeon")
           .post("/api/dungeon/calculate")
-          .body(StringBody(session => getRandomPayload()))
+          .body(StringBody(_ => getRandomPayload))
           .check(status.is(200))
           .check(jsonPath("$.minimumHp").exists)
           .check(jsonPath("$.executionTimeMs").exists)

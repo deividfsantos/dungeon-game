@@ -5,7 +5,7 @@ import io.gatling.http.protocol.HttpProtocolBuilder
 
 import scala.concurrent.duration._
 
-class DungeonGameRedTeamTest extends Simulation {
+class DungeonGameSecurityTest extends Simulation {
 
   val httpProtocol: HttpProtocolBuilder = http
     .baseUrl("http://localhost:8080")
