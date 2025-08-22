@@ -1,36 +1,30 @@
 #!/bin/bash
 
-echo "Building Dungeon Game API..."
+echo "Building and starting Dungeon Game API..."
 
-# Clean and build the project
 mvn clean package
 
-# Check if build was successful
 if [ $? -eq 0 ]; then
-    echo "Build successful!"
-    echo "Starting services with Docker Compose..."
+    echo "✅ Build successful!"
+    echo "Starting services..."
     
-    # Try docker compose first (newer), then docker-compose (older)
     if command -v docker &> /dev/null; then
         if docker compose version &> /dev/null; then
             docker compose up -d
         elif command -v docker-compose &> /dev/null; then
             docker-compose up -d
         else
-            echo "Neither 'docker compose' nor 'docker-compose' found. Please install Docker Compose."
+            echo "❌ Docker Compose not found"
             exit 1
         fi
     else
-        echo "Docker not found. Please install Docker."
+        echo "❌ Docker not found"
         exit 1
     fi
     
-    echo "Waiting for services to start..."
     sleep 15
-    
-    echo "API is ready at http://localhost:8080"
-    echo "PostgreSQL is ready at localhost:5432"
+    echo "🚀 API ready at http://localhost:8080"
 else
-    echo "Build failed!"
+    echo "❌ Build failed!"
     exit 1
 fi
