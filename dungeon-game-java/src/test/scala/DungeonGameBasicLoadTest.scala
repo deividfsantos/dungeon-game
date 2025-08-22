@@ -1,10 +1,13 @@
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
+
 import scala.concurrent.duration._
 
 class DungeonGameBasicLoadTest extends Simulation {
 
-  val httpProtocol = http
+  val httpProtocol: HttpProtocolBuilder = http
     .baseUrl("http://localhost:8080")
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
@@ -26,7 +29,7 @@ class DungeonGameBasicLoadTest extends Simulation {
   )
 
   // Function to select random payload based on weight
-  def getRandomPayload(): String = {
+  def getRandomPayload: String = {
     val rand = scala.util.Random.nextInt(10)
     rand match {
       case n if n < 5 => smallDungeonPayloads(scala.util.Random.nextInt(smallDungeonPayloads.length))  // 50% small
@@ -35,7 +38,7 @@ class DungeonGameBasicLoadTest extends Simulation {
     }
   }
 
-  val scn = scenario("Basic Load Test with Variable Dungeon Sizes")
+  val scn: ScenarioBuilder = scenario("Basic Load Test with Variable Dungeon Sizes")
     .pause(1)
     .repeat(15) {
       exec(

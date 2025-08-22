@@ -1,10 +1,13 @@
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
+
 import scala.concurrent.duration._
 
 class DungeonGameRedTeamTest extends Simulation {
 
-  val httpProtocol = http
+  val httpProtocol: HttpProtocolBuilder = http
     .baseUrl("http://localhost:8080")
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
@@ -23,8 +26,7 @@ class DungeonGameRedTeamTest extends Simulation {
 
   val validPayload = """{"dungeon": [[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]}"""
 
-  // Teste de bombardeio rápido
-  val rapidFireAttack = scenario("Rapid Fire Attack")
+  val rapidFireAttack: ScenarioBuilder = scenario("Rapid Fire Attack")
     .repeat(100) {
       exec(
         http("Rapid Request")
@@ -34,8 +36,7 @@ class DungeonGameRedTeamTest extends Simulation {
       )
     }
 
-  // Teste com payloads maliciosos
-  val maliciousPayloadAttack = scenario("Malicious Payload Attack")
+  val maliciousPayloadAttack: ScenarioBuilder = scenario("Malicious Payload Attack")
     .repeat(50) {
       exec(
         http("Malicious Request")
@@ -46,8 +47,7 @@ class DungeonGameRedTeamTest extends Simulation {
       .pause(100.milliseconds, 500.milliseconds)
     }
 
-  // Teste de recursos simultâneos
-  val resourceExhaustionAttack = scenario("Resource Exhaustion")
+  val resourceExhaustionAttack: ScenarioBuilder = scenario("Resource Exhaustion")
     .repeat(200) {
       exec(
         http("Heavy Calculation")
@@ -57,8 +57,7 @@ class DungeonGameRedTeamTest extends Simulation {
       )
     }
 
-  // Teste de endpoints simultâneos
-  val multiEndpointAttack = scenario("Multi-Endpoint Attack")
+  val multiEndpointAttack: ScenarioBuilder = scenario("Multi-Endpoint Attack")
     .repeat(30) {
       exec(
         http("Calculate")
@@ -79,8 +78,7 @@ class DungeonGameRedTeamTest extends Simulation {
       .pause(50.milliseconds, 200.milliseconds)
     }
 
-  // Teste de conexões longas
-  val slowLorisAttack = scenario("Slow Loris Style")
+  val slowLorisAttack: ScenarioBuilder = scenario("Slow Loris Style")
     .repeat(10) {
       exec(
         http("Slow Request")
@@ -92,7 +90,6 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   setUp(
-    // Ataques simultâneos em múltiplas frentes
     rapidFireAttack.inject(
       atOnceUsers(50),
       nothingFor(10.seconds),
@@ -121,10 +118,9 @@ class DungeonGameRedTeamTest extends Simulation {
   ).protocols(httpProtocol)
     .maxDuration(5.minutes)
     .assertions(
-      // Assertions mais relaxadas para teste de resistência
       global.responseTime.max.lt(30000),
       global.responseTime.mean.lt(10000),
-      global.successfulRequests.percent.gt(70), // Aceita até 30% de falhas sob ataque
+      global.successfulRequests.percent.gt(70),
       details("Rapid Request").responseTime.percentile3.lt(15000),
       details("Calculate").successfulRequests.percent.gt(80)
     )

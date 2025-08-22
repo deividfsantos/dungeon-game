@@ -1,10 +1,13 @@
 import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
+
 import scala.concurrent.duration._
 
-class DungeonGameRedTeamTest extends Simulation {
+class DungeonGameRedTeamTestNew extends Simulation {
 
-  val httpProtocol = http
+  val httpProtocol: HttpProtocolBuilder = http
     .baseUrl("http://localhost:8080")
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
@@ -29,7 +32,7 @@ class DungeonGameRedTeamTest extends Simulation {
   val validPayload = """{"dungeon": [[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]}"""
 
   // Rapid fire attack with extreme payloads
-  val rapidFireAttack = scenario("Rapid Fire Attack")
+  val rapidFireAttack: ScenarioBuilder = scenario("Rapid Fire Attack")
     .repeat(150) {
       exec(
         http("Rapid Request")
@@ -46,7 +49,7 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   // Malicious payload attack
-  val maliciousPayloadAttack = scenario("Malicious Payload Attack")
+  val maliciousPayloadAttack: ScenarioBuilder = scenario("Malicious Payload Attack")
     .repeat(75) {
       exec(
         http("Malicious Request")
@@ -58,7 +61,7 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   // Resource exhaustion attack with massive dungeons
-  val resourceExhaustionAttack = scenario("Resource Exhaustion Attack")
+  val resourceExhaustionAttack: ScenarioBuilder = scenario("Resource Exhaustion Attack")
     .repeat(30) {
       exec(
         http("Extreme Resource Consumption")
@@ -73,7 +76,7 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   // Memory bomb attack - rapid succession of 30x30 dungeons
-  val memoryBombAttack = scenario("Memory Bomb Attack")
+  val memoryBombAttack: ScenarioBuilder = scenario("Memory Bomb Attack")
     .repeat(15) {
       exec(
         http("Memory Bomb - 30x30 Dungeon")
@@ -84,7 +87,7 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   // Multi-endpoint attack
-  val multiEndpointAttack = scenario("Multi-Endpoint Attack")
+  val multiEndpointAttack: ScenarioBuilder = scenario("Multi-Endpoint Attack")
     .repeat(40) {
       exec(
         http("Calculate")
@@ -106,7 +109,7 @@ class DungeonGameRedTeamTest extends Simulation {
     }
 
   // Slow loris attack with massive payloads
-  val slowLorisAttack = scenario("Slow Loris Style Attack")
+  val slowLorisAttack: ScenarioBuilder = scenario("Slow Loris Style Attack")
     .repeat(10) {
       exec(
         http("Slow Large Request")
