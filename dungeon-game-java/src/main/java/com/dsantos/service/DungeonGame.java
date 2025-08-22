@@ -1,4 +1,4 @@
-package com.dsantos;
+package com.dsantos.service;
 
 public class DungeonGame {
     public int calculateMinimumHP(int[][] dungeon) {

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "game_results")
-public class GameResult {
+public class GameResultEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,18 +24,17 @@ public class GameResult {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public GameResult() {
+    public GameResultEntity() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public GameResult(String dungeonInput, Integer minimumHp, Long executionTimeMs) {
+    public GameResultEntity(String dungeonInput, Integer minimumHp, Long executionTimeMs) {
         this();
         this.dungeonInput = dungeonInput;
         this.minimumHp = minimumHp;
         this.executionTimeMs = executionTimeMs;
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

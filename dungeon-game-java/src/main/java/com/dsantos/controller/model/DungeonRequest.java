@@ -1,4 +1,4 @@
-package com.dsantos.controller.request;
+package com.dsantos.controller.model;
 
 
 import jakarta.validation.constraints.NotNull;

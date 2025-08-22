@@ -1,9 +1,7 @@
 package com.dsantos.service;
 
-import com.dsantos.DungeonGame;
-import com.dsantos.model.GameResult;
+import com.dsantos.model.GameResultEntity;
 import com.dsantos.repository.GameResultRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,16 +19,16 @@ public class DungeonGameService {
         this.gameResultRepository = gameResultRepository;
     }
 
-    public GameResult calculateAndSave(int[][] dungeon) {
+    public GameResultEntity calculateAndSave(int[][] dungeon) {
         long startTime = System.currentTimeMillis();
         int minimumHp = dungeonGame.calculateMinimumHP(dungeon);
         long executionTime = System.currentTimeMillis() - startTime;
         String dungeonInput = serializeDungeon(dungeon);
-        GameResult result = new GameResult(dungeonInput, minimumHp, executionTime);
+        GameResultEntity result = new GameResultEntity(dungeonInput, minimumHp, executionTime);
         return gameResultRepository.save(result);
     }
 
-    public List<GameResult> getRecentResults(int hours) {
+    public List<GameResultEntity> getRecentResults(int hours) {
         LocalDateTime since = LocalDateTime.now().minusHours(hours);
         return gameResultRepository.findRecentResults(since);
     }

@@ -1,7 +1,8 @@
 package com.dsantos.controller;
 
-import com.dsantos.controller.request.DungeonRequest;
-import com.dsantos.model.GameResult;
+import com.dsantos.controller.model.DungeonRequest;
+import com.dsantos.controller.model.DungeonResponse;
+import com.dsantos.model.GameResultEntity;
 import com.dsantos.service.DungeonGameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,24 @@ public class DungeonGameController {
 
 
     @PostMapping("/calculate")
-    public ResponseEntity<GameResult> calculateMinimumHP(@Valid @RequestBody DungeonRequest request) {
-        GameResult result = dungeonGameService.calculateAndSave(request.getDungeon());
+    public ResponseEntity<GameResultEntity> calculateMinimumHP(@Valid @RequestBody DungeonRequest request) {
+        GameResultEntity result = dungeonGameService.calculateAndSave(request.getDungeon());
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/results")
-    public ResponseEntity<List<GameResult>> getRecentResults(
+    public ResponseEntity<List<DungeonResponse>> getRecentResults(
             @RequestParam(defaultValue = "24") int hours) {
-        List<GameResult> results = dungeonGameService.getRecentResults(hours);
-        return ResponseEntity.ok(results);
+        List<GameResultEntity> results = dungeonGameService.getRecentResults(hours);
+        List<DungeonResponse> responseList = results.stream()
+                .map(result -> new DungeonResponse(
+                        result.getId(),
+                        result.getDungeonInput(),
+                        result.getMinimumHp(),
+                        result.getExecutionTimeMs(),
+                        result.getCreatedAt()))
+                .toList();
+        return ResponseEntity.ok(responseList);
     }
 
     @GetMapping("/stats")

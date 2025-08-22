@@ -1,6 +1,6 @@
 package com.dsantos.repository;
 
-import com.dsantos.model.GameResult;
+import com.dsantos.model.GameResultEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface GameResultRepository extends JpaRepository<GameResult, Long> {
+public interface GameResultRepository extends JpaRepository<GameResultEntity, Long> {
 
     @Query("SELECT gr FROM GameResult gr WHERE gr.createdAt >= :startTime ORDER BY gr.createdAt DESC")
-    List<GameResult> findRecentResults(LocalDateTime startTime);
+    List<GameResultEntity> findRecentResults(LocalDateTime startTime);
 
     @Query("SELECT AVG(gr.executionTimeMs) FROM GameResult gr WHERE gr.createdAt >= :startTime")
     Double getAverageExecutionTime(LocalDateTime startTime);
