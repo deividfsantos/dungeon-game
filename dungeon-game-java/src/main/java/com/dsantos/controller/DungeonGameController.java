@@ -24,6 +24,7 @@ public class DungeonGameController {
         this.dungeonGameService = dungeonGameService;
     }
 
+
     @PostMapping("/calculate")
     public ResponseEntity<GameResult> calculateMinimumHP(@Valid @RequestBody DungeonRequest request) {
         GameResult result = dungeonGameService.calculateAndSave(request.getDungeon());
