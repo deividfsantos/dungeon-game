@@ -27,10 +27,10 @@ def process_gatling_log(log_file_path):
     try:
         with open(log_file_path, 'r') as f:
             for line in f:
-                print(line.strip())
                 parts = line.strip().split('\t')
-                
-                if len(parts) >= 7 and parts[0] == 'REQUEST':
+
+                if len(parts) >= 6 and parts[0] == 'REQUEST':
+                    print("Processing request:", parts[1])
                     total_requests += 1
                     start_time = int(parts[3])
                     end_time = int(parts[4])
@@ -38,7 +38,6 @@ def process_gatling_log(log_file_path):
                     status = parts[5]
                     
                     request_times.append(response_time)
-                    
                     if status == 'OK':
                         status_codes['success'] += 1
                     else:
