@@ -11,6 +11,10 @@ fi
 # Install Python requests if needed
 python3 -c "import requests" 2>/dev/null || pip3 install requests
 
+# Clean up any existing containers
+echo "Cleaning up existing containers..."
+docker-compose down -v 2>/dev/null || true
+
 # Build application
 echo "Building application..."
 mvn clean compile test-compile -q
@@ -21,7 +25,7 @@ docker-compose up -d
 
 # Wait for services
 echo "Waiting for services..."
-sleep 15
+sleep 20
 
 echo ""
 echo "✅ Setup complete!"

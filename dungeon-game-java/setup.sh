@@ -2,6 +2,9 @@
 
 echo "Starting Dungeon Game API..."
 
+echo "Cleaning up existing containers..."
+docker-compose down -v 2>/dev/null || true
+
 mvn clean package -q
 
 if [ $? -eq 0 ]; then
