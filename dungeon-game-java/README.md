@@ -10,24 +10,19 @@ The Dungeon Game calculates the minimum initial health required for a knight to 
 
 ## Quick Start
 
-1. **Build and start services:**
+1. **Setup basic application:**
 ```bash
-./start.sh
+./setup.sh
 ```
 
-2. **Test the API:**
+2. **Run tests:**
 ```bash
-./test-api.sh
+./test.sh
 ```
 
-3. **Run performance tests:**
+3. **Setup with monitoring (Grafana + Prometheus):**
 ```bash
-./run-gatling-tests.sh
-```
-
-4. **Start monitoring (Grafana + Prometheus):**
-```bash
-./start-monitoring.sh
+./setup-monitoring.sh
 ```
 
 ## API Usage
@@ -86,7 +81,7 @@ Complete monitoring stack with Gatling metrics integration:
 
 ### Quick Setup
 ```bash
-./start-monitoring.sh
+./setup-monitoring.sh
 ```
 
 ### What You Get
@@ -97,10 +92,13 @@ Complete monitoring stack with Gatling metrics integration:
 
 ### Manual Testing
 ```bash
-# Run load test
-mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTestWithMetrics
+# Run specific tests
+./test.sh
 
-# Export metrics
+# Or run performance tests directly
+mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
+
+# Export metrics (if monitoring is running)
 python3 export-gatling-metrics.py
 
 # Stop services
