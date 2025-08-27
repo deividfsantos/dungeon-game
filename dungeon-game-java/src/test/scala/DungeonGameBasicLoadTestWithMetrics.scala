@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 class DungeonGameBasicLoadTestWithMetrics extends Simulation {
 
   val httpProtocol: HttpProtocolBuilder = http
-    .baseUrl("http://host.docker.internal:8080") // Use host.docker.internal to reach host from container
+    .baseUrl("http://localhost:8080") // Use host.docker.internal to reach host from container
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
 

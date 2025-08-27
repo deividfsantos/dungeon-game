@@ -17,7 +17,7 @@ docker-compose down -v 2>/dev/null || true
 
 # Build application
 echo "Building application..."
-mvn clean compile test-compile -q
+mvn clean compile test-compile -q install
 
 # Start services
 echo "Starting services..."
