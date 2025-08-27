@@ -1,30 +1,25 @@
 #!/bin/bash
 
-echo "Building and starting Dungeon Game API..."
+echo "Starting Dungeon Game API..."
 
-mvn clean package
+mvn clean package -q
 
 if [ $? -eq 0 ]; then
-    echo "✅ Build successful!"
-    echo "Starting services..."
+    echo "✅ Build successful"
+    docker-compose up -d
     
-    if command -v docker &> /dev/null; then
-        if docker compose version &> /dev/null; then
-            docker compose up -d
-        elif command -v docker-compose &> /dev/null; then
-            docker-compose up -d
-        else
-            echo "❌ Docker Compose not found"
-            exit 1
-        fi
+    if [ $? -eq 0 ]; then
+        echo "✅ Services started"
+        echo ""
+        echo "🔗 API: http://localhost:8080/api/dungeon/calculate"
+        echo "🔍 Health: http://localhost:8080/actuator/health"
+        echo ""
+        echo "🛑 To stop: docker-compose down"
     else
-        echo "❌ Docker not found"
+        echo "❌ Failed to start services"
         exit 1
     fi
-    
-    sleep 15
-    echo "🚀 API ready at http://localhost:8080"
 else
-    echo "❌ Build failed!"
+    echo "❌ Build failed"
     exit 1
 fi
