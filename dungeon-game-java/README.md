@@ -20,7 +20,7 @@ The Dungeon Game calculates the minimum initial health required for a knight to 
 ./test-api.sh
 ```
 
-3. **Run stress tests:**
+3. **Run performance tests:**
 ```bash
 ./run-gatling-tests.sh
 ```
@@ -34,29 +34,65 @@ curl -X POST http://localhost:8080/api/dungeon/calculate \
   -d '{"dungeon": [[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]}'
 ```
 
-**Get results:** `GET /api/dungeon/results?hours=24`  
-**Get stats:** `GET /api/dungeon/stats?hours=24`
+**Get execution history:** `GET /api/dungeon/results?hours=24`  
+**Get performance stats:** `GET /api/dungeon/stats?hours=24`
 
 ## Stress Testing
 
-The application includes comprehensive Gatling tests designed for Red Team scenarios:
+The application includes comprehensive Gatling-based performance tests designed to evaluate system behavior under various load conditions:
 
-- **Basic Load Test**: Normal operation validation (10-20 users, 2 minutes)
-- **Stress Test**: Scalability limits (up to 200 users, 10 minutes) 
-- **Red Team Tests**: DoS simulation and extreme load with large matrices
+### Test Scenarios
 
-**Run tests:** `./run-gatling-tests.sh`  
-**Reports:** Generated in `target/gatling/` with detailed performance metrics
+**1. Basic Load Test (`DungeonGameBasicLoadTest.scala`)**
+- **Purpose**: Validates normal operation and baseline performance
+- **Load Pattern**: 10-20 concurrent users over 5 minutes
+- **Dungeon Sizes**: Mixed small (3x3), medium (5x5), and large (8x8) dungeons
+- **Assertions**: >95% success rate, <10s max response time, <3s mean response time
+- **Use Case**: Functional validation and performance baseline establishment
 
-## Technical Details
+**2. Stress Test (`DungeonGameStressTest.scala`)**
+- **Purpose**: Tests system limits and performance degradation under high load
+- **Load Pattern**: Up to 75 concurrent users over 5 minutes with sustained load phases
+- **Dungeon Sizes**: Small (3x3), medium (5x5), and large (10x10) dungeons
+- **Test Phases**:
+  - High Load: Ramp to 50 users, sustain 25 RPS for 2 minutes
+  - Sustained Load: 10 RPS for 3 minutes with medium dungeons
+- **Assertions**: >80% success rate, <35s max response time, <10s mean response time
+- **Use Case**: Capacity planning and stress testing under realistic high-load scenarios
+
+### Running Tests
+
+Execute all performance tests:
+```bash
+./run-gatling-tests.sh
+```
+
+Run individual test classes:
+```bash
+mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
+mvn gatling:test -Dgatling.simulationClass=DungeonGameStressTest
+```
+
+**Reports**: Detailed HTML reports generated in `target/gatling/` with response time percentiles, throughput metrics, and error analysis.
+
+## Technical Implementation
 
 **Algorithm Complexity:**
-- Time: O(m × n)
-- Space: O(m × n)
+- Time Complexity: O(m × n) - Single pass through dungeon grid
+- Space Complexity: O(m × n) - Dynamic programming table storage
 
-**Docker Environment:**
-- Java 23 application
-- PostgreSQL database
-- Configurable via environment variables
+**Architecture:**
+- **Framework**: Java 23 with Spring Boot 3.x
+- **Algorithm**: Dynamic Programming (bottom-up approach)
+- **Database**: PostgreSQL with JPA/Hibernate
+- **Testing**: Gatling for performance testing
+- **Containerization**: Docker with multi-stage builds
 
-**Database:** Auto-created `game_results` table stores dungeon inputs, results, and performance metrics.
+**Performance Features:**
+- Optimized DP algorithm with minimal memory allocations
+- Database connection pooling for concurrent requests  
+- Execution metrics tracking for performance analysis
+- Configurable via environment variables for different environments
+
+**Database Schema:** 
+Auto-created `game_results` table stores dungeon configurations, calculated results, execution timestamps, and performance metrics for historical analysis.
