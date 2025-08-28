@@ -102,7 +102,7 @@ mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
 python3 export-gatling-metrics.py
 
 # Stop services
-docker-compose down
+docker compose down
 ```
 
 ### Monitored Metrics

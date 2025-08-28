@@ -27,6 +27,7 @@ def process_gatling_log(log_file_path):
     try:
         with open(log_file_path, 'r') as f:
             for line in f:
+                print(line.strip())
                 parts = line.strip().split('\t')
                 
                 if len(parts) >= 7 and parts[0] == 'REQUEST':
@@ -79,17 +80,31 @@ def process_gatling_log(log_file_path):
         return False
 
 def find_latest_gatling_log():
-    """Find the most recent Gatling simulation log"""
-    gatling_dirs = glob.glob("target/gatling/*")
-    if not gatling_dirs:
+    """
+    Finds the most recent Gatling simulation log using the lastRun.txt file.
+    """
+    last_run_file = "target/gatling/lastRun.txt"
+
+    if not os.path.exists(last_run_file):
         return None
-    
-    latest_dir = max(gatling_dirs, key=os.path.getmtime)
-    log_file = os.path.join(latest_dir, "simulation.log")
-    
-    if os.path.exists(log_file):
-        return log_file
-    return None
+
+    try:
+        with open(last_run_file, 'r') as f:
+            simulation_dir_name = f.read().strip()
+
+        if not simulation_dir_name:
+            return None
+
+        latest_dir = os.path.join("target/gatling", simulation_dir_name)
+        log_file = os.path.join(latest_dir, "simulation.log")
+        print(f"🔍 Found log file: {log_file}")
+        if os.path.exists(log_file):
+            return log_file
+        else:
+            return None
+
+    except IOError:
+        return None
 
 if __name__ == "__main__":
     print("🚀 Exporting Gatling metrics...")

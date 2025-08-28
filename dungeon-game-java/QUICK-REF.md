@@ -19,7 +19,7 @@
 
 ## Stop
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---

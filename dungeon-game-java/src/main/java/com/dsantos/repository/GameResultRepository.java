@@ -11,12 +11,12 @@ import java.util.List;
 @Repository
 public interface GameResultRepository extends JpaRepository<GameResultEntity, Long> {
 
-    @Query("SELECT gr FROM GameResult gr WHERE gr.createdAt >= :startTime ORDER BY gr.createdAt DESC")
+    @Query("SELECT gr FROM GameResultEntity gr WHERE gr.createdAt >= :startTime ORDER BY gr.createdAt DESC")
     List<GameResultEntity> findRecentResults(LocalDateTime startTime);
 
-    @Query("SELECT AVG(gr.executionTimeMs) FROM GameResult gr WHERE gr.createdAt >= :startTime")
+    @Query("SELECT AVG(gr.executionTimeMs) FROM GameResultEntity gr WHERE gr.createdAt >= :startTime")
     Double getAverageExecutionTime(LocalDateTime startTime);
 
-    @Query("SELECT COUNT(gr) FROM GameResult gr WHERE gr.createdAt >= :startTime")
+    @Query("SELECT COUNT(gr) FROM GameResultEntity gr WHERE gr.createdAt >= :startTime")
     Long countRecentExecutions(LocalDateTime startTime);
 }

@@ -13,15 +13,15 @@ python3 -c "import requests" 2>/dev/null || pip3 install requests
 
 # Clean up any existing containers
 echo "Cleaning up existing containers..."
-docker-compose down -v 2>/dev/null || true
+docker compose down -v 2>/dev/null || true
 
 # Build application
 echo "Building application..."
-mvn clean compile test-compile -q install
+mvn clean install
 
 # Start services
 echo "Starting services..."
-docker-compose up -d
+docker compose up -d
 
 # Wait for services
 echo "Waiting for services..."
@@ -52,4 +52,4 @@ if [[ $run_test =~ ^[Yy]$ ]]; then
 fi
 
 echo ""
-echo "🛑 To stop: docker-compose down"
+echo "🛑 To stop: docker compose down"

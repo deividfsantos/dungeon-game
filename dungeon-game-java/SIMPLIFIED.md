@@ -2,7 +2,7 @@
 
 ## Core Files
 - `README.md` - Complete project documentation
-- `docker-compose.yml` - All services (app, db, monitoring)
+- `docker compose.yml` - All services (app, db, monitoring)
 - `pom.xml` - Maven configuration with monitoring dependencies
 
 ## Scripts (3 total - Clear Purpose)
