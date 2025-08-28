@@ -58,12 +58,12 @@ def process_gatling_log(log_file_path):
             # Send metrics to PushGateway
             current_time = int(time.time())
             
-            send_to_pushgateway("gatling_requests_total", total_requests, '{"job":"gatling"}', "Total requests")
-            send_to_pushgateway("gatling_requests_failed_total", errors, '{"job":"gatling"}', "Failed requests")
-            send_to_pushgateway("gatling_response_time_seconds", p50, '{"job":"gatling","quantile":"0.5"}', "P50 response time")
-            send_to_pushgateway("gatling_response_time_seconds", p95, '{"job":"gatling","quantile":"0.95"}', "P95 response time")
-            send_to_pushgateway("gatling_response_time_seconds", p99, '{"job":"gatling","quantile":"0.99"}', "P99 response time")
-            send_to_pushgateway("gatling_error_rate", error_rate, '{"job":"gatling"}', "Error rate")
+            send_to_pushgateway("gatling_requests_total", total_requests, '{job="gatling"}', "Total requests")
+            send_to_pushgateway("gatling_requests_failed_total", errors, '{job="gatling"}', "Failed requests")
+            send_to_pushgateway("gatling_response_time_seconds", p50, '{job="gatling",quantile="0.5"}', "P50 response time")
+            send_to_pushgateway("gatling_response_time_seconds", p95, '{job="gatling",quantile="0.95"}', "P95 response time")
+            send_to_pushgateway("gatling_response_time_seconds", p99, '{job="gatling",quantile="0.99"}', "P99 response time")
+            send_to_pushgateway("gatling_error_rate", error_rate, '{job="gatling"}', "Error rate")
             
             print(f"📊 Processed {total_requests} requests, {errors} errors")
             print(f"📈 P50: {p50:.2f}s, P95: {p95:.2f}s, P99: {p99:.2f}s")
