@@ -1,0 +1,32 @@
+groups:
+  - name: gatling
+    rules:
+      - record: gatling:request_rate
+        expr: rate(gatling_requests_total[5m])
+      
+      - record: gatling:response_time_95th
+        expr: histogram_quantile(0.95, rate(gatling_response_time_seconds_bucket[5m]))
+      
+      - record: gatling:response_time_99th
+        expr: histogram_quantile(0.99, rate(gatling_response_time_seconds_bucket[5m]))
+      
+      - record: gatling:error_rate
+        expr: rate(gatling_requests_failed_total[5m]) / rate(gatling_requests_total[5m])
+      
+      - alert: HighResponseTime
+        expr: gatling:response_time_95th > 2
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }}s"
+      
+      - alert: HighErrorRate
+        expr: gatling:error_rate > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }}"

@@ -10,19 +10,19 @@ The Dungeon Game calculates the minimum initial health required for a knight to 
 
 ## Quick Start
 
-1. **Build and start services:**
+1. **Setup basic application:**
 ```bash
-./start.sh
+./setup.sh
 ```
 
-2. **Test the API:**
+2. **Run tests:**
 ```bash
-./test-api.sh
+./test.sh
 ```
 
-3. **Run performance tests:**
+3. **Setup with monitoring (Grafana + Prometheus):**
 ```bash
-./run-gatling-tests.sh
+./setup-monitoring.sh
 ```
 
 ## API Usage
@@ -74,6 +74,40 @@ mvn gatling:test -Dgatling.simulationClass=DungeonGameStressTest
 ```
 
 **Reports**: Detailed HTML reports generated in `target/gatling/` with response time percentiles, throughput metrics, and error analysis.
+
+## Performance Monitoring
+
+Complete monitoring stack with Gatling metrics integration:
+
+### Quick Setup
+```bash
+./setup-monitoring.sh
+```
+
+### What You Get
+- **Prometheus**: Metrics collection (http://localhost:9090)
+- **Grafana**: Performance dashboards (http://localhost:3000 - admin/admin)
+- **PushGateway**: Gatling metrics aggregation (http://localhost:9091)
+- **Spring Actuator**: Application metrics (http://localhost:8080/actuator/prometheus)
+
+### Manual Testing
+```bash
+# Run specific tests
+./test.sh
+
+# Or run performance tests directly
+mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTest
+
+# Export metrics (if monitoring is running)
+python3 export-gatling-metrics.py
+
+# Stop services
+docker compose down
+```
+
+### Monitored Metrics
+- **Gatling**: Request rates, response times (P50, P95, P99), error rates
+- **Application**: JVM metrics, HTTP requests, database connections
 
 ## Technical Implementation
 
