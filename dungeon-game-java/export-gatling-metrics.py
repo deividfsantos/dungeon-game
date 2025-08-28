@@ -10,11 +10,12 @@ def send_to_pushgateway(metric_name, value, labels="", help_text="", pushgateway
     """Send a metric to Prometheus PushGateway"""
     url = f"{pushgateway_url}/metrics/job/gatling"
     data = f"# HELP {metric_name} {help_text}\n# TYPE {metric_name} gauge\n{metric_name}{labels} {value}\n"
-    
+    print(f"➡️ Sending to PushGateway: {data.strip()}")
     try:
         response = requests.post(url, data=data, headers={'Content-Type': 'text/plain'})
         return response.status_code == 200
     except Exception as e:
+        print(f"❌ Error sending to PushGateway: {e}")
         return False
 
 def process_gatling_log(log_file_path):
@@ -30,7 +31,6 @@ def process_gatling_log(log_file_path):
                 parts = line.strip().split('\t')
 
                 if len(parts) >= 6 and parts[0] == 'REQUEST':
-                    print("Processing request:", parts[1])
                     total_requests += 1
                     start_time = int(parts[3])
                     end_time = int(parts[4])
