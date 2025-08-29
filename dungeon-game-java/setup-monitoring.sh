@@ -39,8 +39,8 @@ echo "   API: http://localhost:8080/api/dungeon/calculate"
 echo "   Health: http://localhost:8080/actuator/health"
 echo ""
 
-read -p "Run load test now? (y/N): " run_test
-
+#read -p "Run load test now? (y/N): " run_test
+run_test="y"
 if [[ $run_test =~ ^[Yy]$ ]]; then
     echo "Running Gatling test..."
     mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTestWithMetrics -q
@@ -50,6 +50,3 @@ if [[ $run_test =~ ^[Yy]$ ]]; then
         python3 export-gatling-metrics.py
     fi
 fi
-
-echo ""
-echo "🛑 To stop: docker compose down"

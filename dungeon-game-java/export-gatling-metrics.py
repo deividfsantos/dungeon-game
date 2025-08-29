@@ -96,7 +96,6 @@ def find_latest_gatling_log():
 
         latest_dir = os.path.join("target/gatling", simulation_dir_name)
         log_file = os.path.join(latest_dir, "simulation.log")
-        print(f"🔍 Found log file: {log_file}")
         if os.path.exists(log_file):
             return log_file
         else:
