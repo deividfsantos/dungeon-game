@@ -24,8 +24,8 @@
   "panels": [
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "Prometheus",
+        "uid": "Prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -99,10 +99,10 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
-          "expr": "rate(gatling_requests_total[5m])",
+          "expr": "rate(gatling_requests_total[1000m])",
           "interval": "",
           "legendFormat": "Request Rate",
           "refId": "A"
@@ -113,8 +113,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "Prometheus",
+        "uid": "Prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -188,30 +188,30 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
-          "expr": "histogram_quantile(0.50, rate(gatling_response_time_seconds_bucket[5m]))",
+          "expr": "histogram_quantile(0.50, rate(gatling_response_time_seconds_bucket[1000m]))",
           "interval": "",
           "legendFormat": "50th percentile",
           "refId": "A"
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
-          "expr": "histogram_quantile(0.95, rate(gatling_response_time_seconds_bucket[5m]))",
+          "expr": "histogram_quantile(0.95, rate(gatling_response_time_seconds_bucket[1000m]))",
           "interval": "",
           "legendFormat": "95th percentile",
           "refId": "B"
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
-          "expr": "histogram_quantile(0.99, rate(gatling_response_time_seconds_bucket[5m]))",
+          "expr": "histogram_quantile(0.99, rate(gatling_response_time_seconds_bucket[1000m]))",
           "interval": "",
           "legendFormat": "99th percentile",
           "refId": "C"
@@ -222,8 +222,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "Prometheus",
+        "uid": "Prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -297,10 +297,10 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
-          "expr": "rate(gatling_requests_failed_total[5m]) / rate(gatling_requests_total[5m])",
+          "expr": "rate(gatling_requests_failed_total[1000m]) / rate(gatling_requests_total[1000m])",
           "interval": "",
           "legendFormat": "Error Rate",
           "refId": "A"
@@ -311,8 +311,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "Prometheus",
+        "uid": "Prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -386,8 +386,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "Prometheus",
+            "uid": "Prometheus"
           },
           "expr": "gatling_users_active",
           "interval": "",
@@ -532,7 +532,7 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1000m",
     "to": "now"
   },
   "timepicker": {},
