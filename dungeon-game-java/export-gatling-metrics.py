@@ -10,12 +10,12 @@ def send_to_pushgateway(metric_name, value, labels="", help_text="", pushgateway
     """Send a metric to Prometheus PushGateway"""
     url = f"{pushgateway_url}/metrics/job/gatling"
     data = f"# HELP {metric_name} {help_text}\n# TYPE {metric_name} gauge\n{metric_name}{labels} {value}\n"
-    print(f"➡️ Sending to PushGateway: {data.strip()}")
+    print(f"Sending to PushGateway: {data.strip()}")
     try:
         response = requests.post(url, data=data, headers={'Content-Type': 'text/plain'})
         return response.status_code == 200
     except Exception as e:
-        print(f"❌ Error sending to PushGateway: {e}")
+        print(f"Error sending to PushGateway: {e}")
         return False
 
 def process_gatling_log(log_file_path):
@@ -65,17 +65,17 @@ def process_gatling_log(log_file_path):
             send_to_pushgateway("gatling_response_time_seconds", p99, '{job="gatling",quantile="0.99"}', "P99 response time")
             send_to_pushgateway("gatling_error_rate", error_rate, '{job="gatling"}', "Error rate")
             
-            print(f"📊 Processed {total_requests} requests, {errors} errors")
-            print(f"📈 P50: {p50:.2f}s, P95: {p95:.2f}s, P99: {p99:.2f}s")
-            print(f"📊 Error rate: {error_rate:.2%}")
-            
+            print(f"Processed {total_requests} requests, {errors} errors")
+            print(f"P50: {p50:.2f}s, P95: {p95:.2f}s, P99: {p99:.2f}s")
+            print(f"Error rate: {error_rate:.2%}")
+
             return True
         else:
-            print("⚠️ No request data found")
+            print("No request data found")
             return False
             
     except Exception as e:
-        print(f"❌ Error processing log: {e}")
+        print(f"Error processing log: {e}")
         return False
 
 def find_latest_gatling_log():
@@ -105,23 +105,23 @@ def find_latest_gatling_log():
         return None
 
 if __name__ == "__main__":
-    print("🚀 Exporting Gatling metrics...")
+    print("Exporting Gatling metrics...")
     
     # Check PushGateway
     try:
         requests.get("http://localhost:9091/metrics", timeout=5)
     except:
-        print("❌ PushGateway not accessible at http://localhost:9091")
+        print("PushGateway not accessible at http://localhost:9091")
         exit(1)
     
     # Find and process log
     log_file = find_latest_gatling_log()
     if log_file:
         if process_gatling_log(log_file):
-            print("✅ Metrics exported successfully!")
-            print("🔗 View at: http://localhost:3000")
+            print("Metrics exported successfully!")
+            print("View at: http://localhost:3000")
         else:
-            print("❌ Failed to export metrics")
+            print("Failed to export metrics")
     else:
-        print("❌ No Gatling log found. Run a test first.")
-        print("   mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTestWithMetrics")
+        print("No Gatling log found. Run a test first.")
+        print("  mvn gatling:test -Dgatling.simulationClass=DungeonGameBasicLoadTestWithMetrics")
